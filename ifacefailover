@@ -1,0 +1,67 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          ifacefailover
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: ifacefailover
+# Description:       ifacefailover
+### END INIT INFO
+
+# Place script in /etc/init.d
+# Run 'sudo update-rc.d <service> defaults'
+# Default logger is /var/log/syslog
+
+SERVICE_ID='ifacefailover'
+START_SERVICE='python /opt/ifacefailover/src/ifacefailover.py /opt/ifacefailover/config/ifacefailover.properties'
+
+log() {
+	echo "$@" | tee >(logger -p user.info -t "$SERVICE_ID [$$]" "$@")
+}
+
+getPid() {
+	ps -ef | grep "$START_SERVICE" | grep -v grep | awk '{print $2}'
+}
+
+case "$1" in 
+	start)
+		pid=`getPid`
+		if [ -n "$pid" ]; then
+			log "$SERVICE_ID is already started [$pid]"
+		else
+			log "Starting $SERVICE_ID"
+			nohup $START_SERVICE > /opt/ifacefailover/logs/out.log 2>&1 &
+		fi
+		;;
+	stop)
+		pid=`getPid`
+		if [ -n "$pid" ]; then
+			log "Stopping $SERVICE_ID"
+			kill $pid
+		else
+			log "$SERVICE_ID is already stopped"
+		fi
+		;;
+	restart)
+		log "Restarting $SERVICE_ID"
+		$0 stop
+		sleep 3
+		$0 start
+		;;
+	status)
+		pid=`getPid`
+		if [ -n "$pid" ]; then
+			echo "$SERVICE_ID is started [$pid]"
+		else
+			echo "$SERVICE_ID is stopped"
+		fi
+		;;
+	*)
+		echo "Usage: /etc/init.d/$SERVICE_ID start|stop|restart|status"
+		exit 1
+		;;
+esac
+
+exit 0
