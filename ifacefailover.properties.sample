@@ -1,0 +1,38 @@
+# Defines the location of the external Python logging configuration file
+log.properties=/opt/ifacefailover/config/log.properties
+
+# The following properties configure the primary route
+
+# This is the gateway of your router
+route.primary.gateway=192.168.1.1
+# This will probably be eth0 for wired connections and wlan0 for wireless connections
+route.primary.iface=eth0
+# We are using the Google primary and secondary DNS servers for route verification
+route.primary.targets=8.8.8.8,8.8.4.4
+# Wait 10 seconds between verification requests
+route.primary.verifierDelay=10
+# We are using an ICMP route verificer to send ping echo requests
+route.primary.verifier=/opt/ifacefailover/config/icmpRouteVerifier.pkl
+# The ICMP verifier is configured with a response timeout of 1 second and will retry 2 times
+route.primary.verifierKwargs={'timeout':1, 'maxRetry':2}
+# We will use the logHandler to log the lifecycle of the route and the httpHandler to send failover events to a web app
+route.primary.handlers=['/opt/ifacefailover/config/logHandler.pkl','/opt/ifacefailover/config/httpHandler.pkl']
+# The logHandler is configured with a name property to log the route name
+# The httpHandler is configured with an authentication tuple, a url, and url suffixes to send different types of event notifications
+route.primary.handlerKwargs=[{'name':'primary'}, {'auth':('username', 'password'), 'url':'https://localhost:5000/myapp/contextroot/', 'onConnectionFailedUrlSuffix':'primaryconnectionfailed', 'onConnectionRestoredUrlSuffix':'primaryconnectionrestored'}]
+
+
+# The following properties configure the secondary route used for failover
+
+# Fona's gateway is 0.0.0.0
+route.fona.gateway=0.0.0.0
+# Fona is running on the ppp0 interface
+route.fona.iface=ppp0
+# Fona is configured with a logHandler to log lifecycle events
+# A fonaRaspberryPiHandler to turn the Fona on and off and start and stop the point-to-point protocol daemon
+# And an httpHandler to send failover events
+route.fona.handlers=['/opt/ifacefailover/config/logHandler.pkl','/opt/ifacefailover/config/fonaRaspberryPiHandler.pkl','/opt/ifacefailover/config/httpHandler.pkl']
+# The logHandler is configured with a name property to log the route name
+# The fonaRaspberryPiHandler is configured with the GPIO pin number connected to the Fona PS pin and the GPIO pin number connected to the Fona Key pin
+# The httpHandler is configured with an authentication tuple, a url, and url suffixes to send different types of event notifications
+route.fona.handlerKwargs=[{'name':'fona'},{'powerStatusPin':23, 'keyPin':18},{'auth':('username', 'password'), 'url':'https://localhost:5000/myapp/contextroot/', 'onConnectedUrlSuffix':'fonaconnected'}]

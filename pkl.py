@@ -1,11 +1,11 @@
-import os
+import os, sys
 from serializationUtil import serialize
 from verifier.icmpRouteVerifier import IcmpRouteVerifier
 from handler.httpHandler import HttpHandler
 from handler.fonaRaspberryPiHandler import FonaRaspberryPiHandler
 from handler.logHandler import LogHandler
 
-dir='/opt/ifacefailover/config'
+dir=sys.argv[1]
 if not os.path.exists(dir):
     os.makedirs(dir)
 
