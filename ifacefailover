@@ -15,7 +15,7 @@
 # Default logger is /var/log/syslog
 
 SERVICE_ID='ifacefailover'
-START_SERVICE='python /opt/ifacefailover/src/ifacefailover.py /opt/ifacefailover/config/ifacefailover.properties'
+START_SERVICE='PYTHONPATH="$PYTHONPATH:/opt/ifacefailover/src" python /opt/ifacefailover/src/ifacefailover.py /opt/ifacefailover/config/ifacefailover.properties'
 
 log() {
 	echo "$@" | tee >(logger -p user.info -t "$SERVICE_ID [$$]" "$@")

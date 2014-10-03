@@ -12,21 +12,22 @@ sudo pip install requests
 # https://pypi.python.org/pypi/pynetinfo
 sudo mkdir -p $GIT_DIR/pynetinfo
 sudo git clone https://github.com/ico2/pynetinfo $GIT_DIR/pynetinfo
-sudo python $IFACEFAILOVER_DIR/pynetinfo/setup.py install
+sudo python $GIT_DIR/pynetinfo/setup.py install
 
 # https://github.com/shellbit/ifacefailover/wiki
 # Create the ifacefailover directory structure and link to the GIT src
 sudo mkdir -p $IFACEFAILOVER_DIR/{config,logs}
-sudo ln -s $IFACEFAILOVER_DIR/src $GIT_DIR/ifacefailover/src
+sudo ln -s $GIT_DIR/ifacefailover/src $IFACEFAILOVER_DIR/src
 
 # Serialize the default route handlers and verifiers
-sudo python $IFACEFAILOVER_DIR/src/pkl.py $IFACEFAILOVER_DIR/config
+sudo python -m compileall $IFACEFAILOVER_DIR/src
+sudo PYTHONPATH="$PYTHONPATH:$IFACEFAILOVER_DIR/src" python $GIT_DIR/ifacefailover/pkl.py $IFACEFAILOVER_DIR/config
 
 # Copy the default log configuration from src
-sudo cp $IFACEFAILOVER_DIR/src/log.properties $IFACEFAILOVER_DIR/config
+sudo cp $GIT_DIR/ifacefailover/log.properties $IFACEFAILOVER_DIR/config
 
 # Copy the default ifacefailover property configuration
-sudo cp $IFACEFAILOVER_DIR/src/ifacefailover.properties.sample $IFACEFAILOVER_DIR/config/ifacefailover.properties
+sudo cp $GIT_DIR/ifacefailover/ifacefailover.properties.sample $IFACEFAILOVER_DIR/config/ifacefailover.properties
 
 # Copy the startup service
-sudo cp $IFACEFAILOVER_DIR/src/ifacefailover /etc/init.d
+sudo cp $GIT_DIR/ifacefailover/ifacefailover /etc/init.d
