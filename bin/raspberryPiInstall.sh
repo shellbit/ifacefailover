@@ -17,3 +17,6 @@ FONA_PEER=/etc/ppp/peers/fona
 wget https://raw.githubusercontent.com/adafruit/FONA_PPP/master/fona -O $FONA_PEER
 echo "FONA peer has been installed at $FONA_PEER"
 echo "You need to update this file with an APN and serial port"
+
+# Run base install script
+sudo "$(dirname $0)/install.sh"
