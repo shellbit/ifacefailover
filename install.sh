@@ -15,8 +15,6 @@ sudo git clone https://github.com/ico2/pynetinfo $GIT_DIR/pynetinfo
 sudo python $IFACEFAILOVER_DIR/pynetinfo/setup.py install
 
 # https://github.com/shellbit/ifacefailover/wiki
-sudo git clone https://github.com/shellbit/ifacefailover $GIT_DIR/ifacefailover
-
 # Create the ifacefailover directory structure and link to the GIT src
 sudo mkdir -p $IFACEFAILOVER_DIR/{config,logs}
 sudo ln -s $IFACEFAILOVER_DIR/src $GIT_DIR/ifacefailover/src
