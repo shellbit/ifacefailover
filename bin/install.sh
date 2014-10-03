@@ -12,7 +12,8 @@ sudo pip install requests
 # https://pypi.python.org/pypi/pynetinfo
 sudo mkdir -p $GIT_DIR/pynetinfo
 sudo git clone https://github.com/ico2/pynetinfo $GIT_DIR/pynetinfo
-sudo python $GIT_DIR/pynetinfo/setup.py install
+cd $GIT_DIR/pynetinfo
+sudo python setup.py install
 
 # https://github.com/shellbit/ifacefailover/wiki
 # Create the ifacefailover directory structure and link to the GIT src
