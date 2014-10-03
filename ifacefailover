@@ -14,8 +14,9 @@
 # Run 'sudo update-rc.d <service> defaults'
 # Default logger is /var/log/syslog
 
+export PYTHONPATH="$PYTHONPATH:/opt/ifacefailover/src"
 SERVICE_ID='ifacefailover'
-START_SERVICE='PYTHONPATH="$PYTHONPATH:/opt/ifacefailover/src" python /opt/ifacefailover/src/ifacefailover.py /opt/ifacefailover/config/ifacefailover.properties'
+START_SERVICE='python /opt/ifacefailover/src/ifacefailover.py /opt/ifacefailover/config/ifacefailover.properties'
 
 log() {
 	echo "$@" | tee >(logger -p user.info -t "$SERVICE_ID [$$]" "$@")
