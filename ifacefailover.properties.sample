@@ -35,4 +35,4 @@ route.fona.handlers=['/opt/ifacefailover/config/logHandler.pkl','/opt/ifacefailo
 # The logHandler is configured with a name property to log the route name
 # The fonaRaspberryPiHandler is configured with the GPIO pin number connected to the Fona PS pin and the GPIO pin number connected to the Fona Key pin
 # The httpHandler is configured with an authentication tuple, a url, and url suffixes to send different types of event notifications
-route.fona.handlerKwargs=[{'name':'fona'},{'powerStatusPin':23, 'keyPin':18},{'auth':('username', 'password'), 'url':'https://localhost:5000/myapp/contextroot/', 'onConnectedUrlSuffix':'fonaconnected'}]
+route.fona.handlerKwargs=[{'name':'fona'},{'powerStatusPin':23, 'keyPin':24},{'auth':('username', 'password'), 'url':'https://localhost:5000/myapp/contextroot/', 'onConnectedUrlSuffix':'fonaconnected'}]
