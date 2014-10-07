@@ -33,3 +33,4 @@ sudo cp $GIT_DIR/ifacefailover/ifacefailover.properties.sample $IFACEFAILOVER_DI
 # Copy the startup service
 sudo cp $GIT_DIR/ifacefailover/ifacefailover /etc/init.d
 sudo chmod 755 /etc/init.d/ifacefailover
+sudo update-rc.d ifacefailover defaults 100
