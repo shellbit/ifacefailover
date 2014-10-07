@@ -7,7 +7,6 @@
 # Disable the kernel's use of the hardware serial connection
 sudo wget https://raw.github.com/lurch/rpi-serial-console/master/rpi-serial-console -O /usr/bin/rpi-serial-console && sudo chmod +x /usr/bin/rpi-serial-console
 sudo rpi-serial-console disable
-echo "Use of the kernel's hardware serial connection has been disabled. You will need to reboot."
 
 # Install the point-to-point protocol daemon
 sudo apt-get install ppp screen elinks
